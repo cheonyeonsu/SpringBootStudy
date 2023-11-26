@@ -1,0 +1,16 @@
+<!--폼데이터 주고받기 실습-->
+{{>layouts/header}}
+
+<form class="container" action="/articles/create" method="post"> <!--어디로 보낼지:action, 어떻게 보낼지:post-->
+    <div class="mb-3">
+        <label class="form-label">제목</label>
+        <input type="text" class="form-control" name="title"> <!--dto의 필드명과 동일한 이름 넣어줘야 데이터가 dto로 연결되어 전달됨-->
+    </div>
+    <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea class="form-control" rows="3" name="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">제출</button>
+</form>
+
+{{>layouts/header}}
