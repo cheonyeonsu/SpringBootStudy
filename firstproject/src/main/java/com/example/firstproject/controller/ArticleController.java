@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +22,13 @@ public class ArticleController {
     private ArticleRepository articleRepository; // 2)articleRepository객체 선언
 
     @GetMapping("/articles")
-    public String index(){
+    public String index(Model model){ //model 객체 받아오기
         // 1. 모든 데이터 가져오기
-        List<Article> articleEntityList = articleRepository.findAll();
-        // 2. 모델에 데이터 등록하기
+        ArrayList<Article> articleEntityList = articleRepository.findAll();
+        // 2. 모델에 데이터 등록하기 : 데이터를 뷰 페이지로 전달할 때는 model 사용.
+        model.addAttribute("articleList",articleEntityList); //articleEntityList등록
         // 3. 뷰 페이지 설정하기
-        return "";
+        return "articles/index";
     }
 
    @GetMapping("/articles/new")
@@ -48,8 +50,9 @@ public class ArticleController {
         Article saved = articleRepository.save(article); // 1)article 엔티티를 저장해 saved 객체에 반환
         log.info(saved.toString());
         //System.out.println(saved.toString());
-        return "";
+        return "redirect:/articles/"+saved.getId(); //id에 따라 URL주소 달라짐. id값을 가져오기 위해 saved객체 사용.
     }
+
     @GetMapping("/articles/{id}") //데이터 조회 요청 접수
     public String show(@PathVariable Long id, Model model) {
         log.info("id = " + id); //id를 잘 받았는지 확인하는 로그 찍기.
