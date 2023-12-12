@@ -31,6 +31,16 @@ public class ArticleController {
         return "articles/index";
     }
 
+    @GetMapping("/articles/{id}/edit") //url요청 접수
+    public String edit(@PathVariable Long id, Model model){ //id를 매개변수로 받아오기, model객체 받아오기
+        //수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null); //db에서 수정할 데이터 가져오기.
+        //모델에 데이터 등록하기
+        model.addAttribute("article",articleEntity); //articleEntity를 article로 등록
+        //뷰 페이지 설정하기
+        return "articles/edit";
+    }
+
    @GetMapping("/articles/new")
     public String newArticleForm(){
         return "articles/new";
