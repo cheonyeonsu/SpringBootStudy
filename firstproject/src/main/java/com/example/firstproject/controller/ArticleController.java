@@ -41,6 +41,26 @@ public class ArticleController {
         return "articles/edit";
     }
 
+    @PostMapping("/articles/update") //url 요청 접수
+    public String update(ArticleForm form){ //메서드 생성
+        log.info(form.toString());
+        //데이터를 DB에 저장하기 위한 과정
+        //1.DTO를 엔티티로 변환하기
+        Article articleEntity = form.toEntity(); //1)DTO(form)를 엔티티(articleEntity)로 변환하기
+        log.info(articleEntity.toString()); //2)엔티티로 잘 변환됐는지 로그 찍기
+        //2.엔티티를 DB에 저장하기
+        //2-1 DB에서 기존 데이터 가져오기
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+
+        //2-2. 기존 데이터 값을 갱신하기
+        //기존 데이터가 있다면 articleRepository의 save메서드를 호출해 articleEntity에 저장된 내용을 DB로 갱신.
+        if (target !=null){
+            articleRepository.save(articleEntity); //엔티티를 DB에 저장(갱신)
+        }
+        //3.수정 결과 페이지로 리다이렉트하기
+        return "redirect:/articles/"+articleEntity.getId();
+    }
+
    @GetMapping("/articles/new")
     public String newArticleForm(){
         return "articles/new";

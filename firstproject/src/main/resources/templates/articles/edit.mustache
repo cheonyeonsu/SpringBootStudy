@@ -1,7 +1,8 @@
 {{>layouts/header}}
 
 {{#article}} <!--article 사용 범위 지정-->
-<form class="container" action="" method="post"> <!--어디로 보낼지:action, 어떻게 보낼지:post-->
+<form class="container" action="/articles/update" method="post"> <!--어디로 보낼지:action, 어떻게 보낼지:post-->
+    <input name="id" type="hidden" value="{{id}}"> <!--id가 몇번인 article을 수정하는지 알려줌, 화면에 표시할 필요는 없으니 hidden-->
     <div class="mb-3">
         <label class="form-label">제목</label>
         <!--dto의 필드명과 동일한 이름 넣어줘야 데이터가 dto로 연결되어 전달됨-->
